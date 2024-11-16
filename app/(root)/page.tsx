@@ -1,19 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
-
-export type StartupCardType = {
-    _id: number; // Or string if _id is a MongoDB ObjectId
-    _createdAt: Date; // Creation date of the post
-    views: number; // Number of views
-    author: {
-        authorId: number | string; // ID of the author
-        name: string; // Name of the author
-    };
-    title: string; // Title of the post
-    category: string; // Category of the startup
-    image: string; // Image URL
-    description: string; // Description of the post
-};
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { client } from "@/sanity/lib/client";
 
 export default async function Home({
     searchParams,
@@ -22,18 +10,7 @@ export default async function Home({
 }) {
     const query = (await searchParams).query;
 
-    const posts: StartupCardType[] = [
-        {
-            _id: 1,
-            _createdAt: new Date(),
-            views: 55,
-            author: { authorId: 1, name: "Osama" },
-            description: "This is a description",
-            image: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg",
-            category: "Robots",
-            title: "we Robots",
-        },
-    ];
+    const posts = await client.fetch(STARTUPS_QUERY);
     return (
         <>
             <section className="pink_container">
@@ -53,7 +30,7 @@ export default async function Home({
                 </p>
                 <ul className="mt-7 card_grid">
                     {posts.length > 0 ? (
-                        posts.map((post: StartupCardType) => (
+                        posts.map((post: StartupTypeCard) => (
                             <StartupCard key={post?._id} post={post} />
                         ))
                     ) : (
