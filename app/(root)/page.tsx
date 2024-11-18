@@ -11,8 +11,13 @@ export default async function Home({
 }) {
     const query = (await searchParams).query;
 
+    const params = { search: query || null };
     // const posts = await client.fetch(STARTUPS_QUERY);
-    const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY });
+    const { data: posts } = await sanityFetch({
+        query: STARTUPS_QUERY,
+        params,
+    });
+
     return (
         <>
             <section className="pink_container">
