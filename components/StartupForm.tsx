@@ -33,11 +33,12 @@ const StartupForm = () => {
             const result = await createPitch(prevState, formData, pitch);
 
             if (result?.status == "SUCCESS") {
-                console.log("a7a");
                 toast({
                     title: "Success",
                     description:
                         "Your startup pitch has been created successfully",
+                    variant: "default",
+                    className: "bg-green-600 text-white",
                 });
 
                 router.push(`/startup/${result._id}`);
