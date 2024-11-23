@@ -141,7 +141,7 @@
     }
 
     .startup-card_desc {
-        @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all;
+        @apply font-normal text-[16px] my-3 text-black-100 truncate overflow-hidden text-ellipsis whitespace-nowrap w-64;
     }
 
     .startup-card_img {
