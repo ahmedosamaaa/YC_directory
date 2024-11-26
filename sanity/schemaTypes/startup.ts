@@ -39,6 +39,9 @@ export const startup = defineType({
             name: "image",
             type: "image",
             validation: (Rule) => Rule.required(),
+            options: {
+                hotspot: true,
+            },
         }),
         defineField({
             name: "pitch",
