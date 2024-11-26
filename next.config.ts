@@ -14,11 +14,20 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "*",
             },
+            // {
+            //     protocol: "https",
+            //     hostname: "cdn.sanity.io",
+            //     port: "",
+            //     pathname: "/images/**",
+            // },
         ],
     },
     experimental: {
         ppr: "incremental",
         after: true,
+        serverActions: {
+            bodySizeLimit: "5mb", // Increase the limit to 5MB
+        },
     },
     devIndicators: {
         appIsrStatus: true,

@@ -3,7 +3,7 @@
 import React, { useState, useActionState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import MDEditor from "@uiw/react-md-editor";
+import MDEditor, { image } from "@uiw/react-md-editor";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validation";
@@ -11,12 +11,25 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { createPitch } from "@/lib/actions";
+import { FileUploader } from "./FileUploader";
 
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [pitch, setPitch] = useState("");
     const { toast } = useToast();
     const router = useRouter();
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFile(file);
+            if (!imageUrl) {
+                setImageUrl(URL.createObjectURL(file)); // Show preview of selected image
+            }
+        }
+    };
 
     const handleFormSubmit = async (prevState: any, formData: FormData) => {
         try {
@@ -24,14 +37,22 @@ const StartupForm = () => {
                 title: formData.get("title") as string,
                 description: formData.get("description") as string,
                 category: formData.get("category") as string,
-                link: formData.get("link") as string,
                 pitch,
+                image: selectedFile,
             };
 
             await formSchema.parseAsync(formValues);
 
-            const result = await createPitch(prevState, formData, pitch);
+            if (selectedFile) {
+                formData.append("image", selectedFile); // Append the selected file to FormData
+            }
 
+            const result = await createPitch(
+                prevState,
+                formData,
+                pitch,
+                selectedFile
+            );
             if (result?.status == "SUCCESS") {
                 toast({
                     title: "Success",
@@ -78,7 +99,7 @@ const StartupForm = () => {
         }
     };
 
-    const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+    const [, formAction, isPending] = useActionState(handleFormSubmit, {
         error: "",
         status: "INITIAL",
     });
@@ -138,21 +159,22 @@ const StartupForm = () => {
 
             <div>
                 <label htmlFor="link" className="startup-form_label">
-                    Image URL
+                    Image
                 </label>
-                <Input
-                    id="link"
-                    name="link"
-                    className="startup-form_input"
-                    required
-                    placeholder="Startup Image URL"
-                />
 
-                {errors.link && (
-                    <p className="startup-form_error">{errors.link}</p>
-                )}
+                <div>
+                    <FileUploader
+                        handleFileChange={handleFileChange}
+                        imageUrl={imageUrl}
+                        setImageUrl={setImageUrl}
+                        selectedFile={selectedFile}
+                        setSelectedFile={setSelectedFile}
+                    />
+                    {errors.image && (
+                        <p className="startup-form_error">{errors.image}</p>
+                    )}
+                </div>
             </div>
-
             <div data-color-mode="light">
                 <label htmlFor="pitch" className="startup-form_label">
                     Pitch

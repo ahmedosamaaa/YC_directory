@@ -13,7 +13,7 @@ export const STARTUPS_QUERY = defineQuery(
     views,
     description,
     category,
-    image
+    "image":image.asset->url,
     }`
 );
 
@@ -30,7 +30,7 @@ export const STARTUP_BY_ID_QUERY =
     views,
     description,
     category,
-    image,
+    "image":image.asset->url,
     pitch
     }`);
 
@@ -73,7 +73,7 @@ export const STARTUPS_BY_AUTHOR_QUERY = defineQuery(
     views,
     description,
     category,
-    image
+    "image":image.asset->url,
     }`
 );
 
@@ -98,7 +98,7 @@ export const PLAYLIST_BY_SLUG_QUERY =
         views,
         description,
         category,
-        image,
+        "image":image.asset->url,
         pitch
         }
     }`);
