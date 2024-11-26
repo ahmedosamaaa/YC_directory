@@ -41,19 +41,18 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </section>
 
             <section className="section_container">
-                <div className="relative w-full h-96 bg-black rounded-xl">
-                    {/* <img
+                <div className="w-full">
+                    <img
                         src={post.image}
                         alt="thumbnail"
                         className="mx-auto rounded-xl"
-                    /> */}
-                    <Image
+                    />
+                    {/* <Image
                         src={post.image}
                         alt="thumbnail"
-                        fill
                         quality={80}
                         className="object-contain object-top rounded-xl overflow-hidden"
-                    />
+                    /> */}
                 </div>
 
                 <div className="space-y-5 mt-10 maz-w-4xl mx-auto">

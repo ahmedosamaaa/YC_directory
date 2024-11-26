@@ -30,28 +30,30 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
                 </div>
             </div>
 
-            <div className="flex-between mt-5 gap-5">
-                <div className="flex-1">
+            <div className="flex-between mt-5 gap-3">
+                <div className="">
                     <Link href={`/user/${author?._id}`}>
                         <p className="text-16-medium line-clamp-1">
                             {author?.name}
                         </p>
                     </Link>
                     <Link href={`/startup/${_id}`}>
-                        <p className="text-26-semibold truncate overflow-hidden text-ellipsis whitespace-nowrap w-64">
+                        <p className="text-md font-semibold truncate overflow-hidden text-ellipsis whitespace-nowrap w-full">
                             {title}
                         </p>
                     </Link>
                 </div>
-                <Link href={`/user/${author?._id}`}>
-                    <Image
-                        src={author?.image || ""}
-                        width={48}
-                        height={48}
-                        alt="placeholder"
-                        className="rounded-full"
-                    />
-                </Link>
+                <div>
+                    <Link href={`/user/${author?._id}`}>
+                        <Image
+                            src={author?.image || ""}
+                            width={58}
+                            height={58}
+                            alt="placeholder"
+                            className="rounded-full"
+                        />
+                    </Link>
+                </div>
             </div>
             <Link href={`/startup/${_id}`}>
                 <p className="startup-card_desc">{description}</p>
