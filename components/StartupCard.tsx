@@ -38,7 +38,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
                         </p>
                     </Link>
                     <Link href={`/startup/${_id}`}>
-                        <p className="text-md font-semibold truncate overflow-hidden text-ellipsis whitespace-nowrap w-full">
+                        <p className="text-md font-semibold truncate overflow-hidden text-ellipsis whitespace-nowrap w-60">
                             {title}
                         </p>
                     </Link>
